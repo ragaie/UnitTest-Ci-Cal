@@ -45,10 +45,16 @@ class CalView: UIViewController {
         super.viewDidLoad()
         
         
+       print( view.recursiveDescription)
+        
+    //  print( UIWindow.key.rootViewController!.printHierarchy)
+     print(  self.printHierarchy)
         
         myController = CalController()
         myController.myView = self
         
+        
+    
         num0.addTarget(self, action: #selector(CalView.writeNumber(_:)), for: .touchUpInside)
         num1.addTarget(self, action: #selector(CalView.writeNumber(_:)), for: .touchUpInside)
         num2.addTarget(self, action: #selector(CalView.writeNumber(_:)), for: .touchUpInside)
@@ -160,8 +166,39 @@ class CalView: UIViewController {
     }
     
     
-    
+
     
     
 }
+#if DEBUG
+    
+    extension UIWindow {
+        
+        class var key: UIWindow {
+            let selector: Selector = NSSelectorFromString("keyWindow")
+            let result = UIWindow.perform(selector)
+            return result?.takeUnretainedValue() as! UIWindow
+        }
+    }
+    
+    extension UIView {
+        
+        var recursiveDescription: NSString {
+            let selector: Selector = NSSelectorFromString("recursiveDescription")
+            let result = perform(selector)
+            return result?.takeUnretainedValue() as! NSString
+        }
+    }
+    
+    
+    extension UIViewController {
+        
+        var printHierarchy: NSString {
+            let selector: Selector = NSSelectorFromString("_printHierarchy")
+            let result = perform(selector)
+            return result?.takeUnretainedValue() as! NSString
+        }
+    }
+    
+#endif
 
